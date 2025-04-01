@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archify - Architecture & Design</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a3a5f;
+            --secondary-color: #d4af37;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --accent-color: #6c757d;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            padding-top: 70px;
+        }
+
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            width: 100%;
+        }
+
+        .navbar.scrolled {
+            padding: 10px 0;
+            background-color: rgba(255, 255, 255, 0.98) !important;
+            backdrop-filter: blur(5px);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 24px;
+        }
+
+        .nav-link {
+            color: var(--dark-color);
+            font-weight: 500;
+            margin: 0 10px;
+            position: relative;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+            color: rgb(0, 0, 0);
+            margin-top: 50px;
+        }
+
+        .sketchfab-embed-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .sketchfab-embed-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #b38f2a;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-section {
+            background-color: var(--light-color);
+            padding: 80px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        .feature-section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary-color);
+            bottom: -10px;
+            left: 0;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            margin-bottom: 50px;
+            max-width: 700px;
+        }
+
+        .feature-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .feature-card .card-body {
+            padding: 25px;
+        }
+
+        .feature-card .card-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .feature-card .card-text {
+            color: var(--accent-color);
+        }
+
+        .testimonial-section {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 100px 0;
+        }
+
+        .testimonial-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+        }
+
+        .client-logo {
+            height: 50px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            margin: 20px;
+        }
+
+        .client-logo:hover {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+        .contact-section {
+            padding: 100px 0;
+            background-color: var(--light-color);
+        }
+
+        .contact-form {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-control {
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: none;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h5 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .footer-links h5:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background: var(--secondary-color);
+            bottom: -10px;
+            left: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 40px;
+            color: #adb5bd;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+        }
+
+        .slide-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .slide-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .hero-section {
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .sketchfab-embed-wrapper {
+                position: relative;
+                height: 50vh;
+            }
+
+            .hero-content {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Archify</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white ms-2" href="#contact">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Sketchfab Model -->
+    <section class="hero-section">
+        <div class="sketchfab-embed-wrapper">
+            <iframe title="Modern House Model" frameborder="0" allowfullscreen mozallowfullscreen="true"
+                webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking
+                execution-while-out-of-viewport execution-while-not-rendered web-share
+                src="https://sketchfab.com/models/48186aa36d644ad296f135035d0d9aad/embed?autostart=1&ui_theme=dark"></iframe>
+        </div>
+
+        <div class="container">
+            <div class="row align-items-center hero-content">
+                <div class="col-lg-6">
+                    <h1 class="hero-title animate__animated animate__fadeInDown">Excellence in every solution.</h1>
+                    <p class="hero-subtitle animate__animated animate__fadeIn animate__delay-1s">Transforming spaces,
+                        elevating lifestyles. At Archify, we craft bespoke interiors that blend aesthetics with
+                        functionality. Let's create a space that truly feels like your sweet home.</p>
+                    <a href="#contact" class="btn btn-primary animate__animated animate__fadeInUp animate__delay-1s">Get
+                        Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-4 stat-item slide-up">
+                    <h3 class="stat-number">230+</h3>
+                    <p class="stat-label">Projects Completed</p>
+                </div>
+                <div class="col-md-4 stat-item slide-up" style="transition-delay: 0.2s;">
+                    <h3 class="stat-number">50+</h3>
+                    <p class="stat-label">Happy Clients</p>
+                </div>
+                <div class="col-md-4 stat-item slide-up" style="transition-delay: 0.4s;">
+                    <h3 class="stat-number">10M+</h3>
+                    <p class="stat-label">Raised More Than</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="feature-section" id="features">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-lg-6">
+                    <h2 class="section-title slide-up">Built better and delivered faster for an all-in-one escape.</h2>
+                    <p class="section-subtitle slide-up" style="transition-delay: 0.2s;">Timeless Designs, Premium
+                        Quality – Elevating spaces with durable materials and expert craftsmanship. Every element is
+                        carefully curated for a flawless finish to bring your vision to life, quickly.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 slide-up">
+                    <div class="card feature-card">
+                        <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&q=80"
+                            class="card-img-top feature-img" alt="Modern Living Room">
+                        <div class="card-body">
+                            <h5 class="card-title">Modern Living Spaces</h5>
+                            <p class="card-text">Contemporary designs that blend comfort with cutting-edge aesthetics
+                                for your living areas.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 slide-up" style="transition-delay: 0.2s;">
+                    <div class="card feature-card">
+                        <img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&q=80"
+                            class="card-img-top feature-img" alt="Kitchen Design">
+                        <div class="card-body">
+                            <h5 class="card-title">Kitchen Mastery</h5>
+                            <p class="card-text">Functional yet beautiful kitchen designs that become the heart of your
+                                home.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 slide-up" style="transition-delay: 0.4s;">
+                    <div class="card feature-card">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&q=80"
+                            class="card-img-top feature-img" alt="Bedroom Design">
+                        <div class="card-body">
+                            <h5 class="card-title">Serene Bedrooms</h5>
+                            <p class="card-text">Personal sanctuaries designed for relaxation and rejuvenation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center">
+                    <h2 class="section-title text-white slide-up">What Our Clients Say</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 slide-up">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"Archify transformed our outdated home into a modern masterpiece.
+                            Their attention to detail and creative solutions exceeded all our expectations."</p>
+                        <p class="testimonial-author">- Sarah Johnson</p>
+                    </div>
+                </div>
+                <div class="col-md-4 slide-up" style="transition-delay: 0.2s;">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"Working with Archify was a pleasure from start to finish. They
+                            listened to our needs and delivered a space that perfectly reflects our style and
+                            personality."</p>
+                        <p class="testimonial-author">- Michael Chen</p>
+                    </div>
+                </div>
+                <div class="col-md-4 slide-up" style="transition-delay: 0.4s;">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"The team at Archify has an incredible eye for design. They took our
+                            vague ideas and turned them into a cohesive, beautiful reality."</p>
+                        <p class="testimonial-author">- Emily Rodriguez</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <h5 class="mb-4 slide-up">Trusted by leading brands</h5>
+                    <div class="d-flex flex-wrap justify-content-center align-items-center">
+                        <img src="https://via.placeholder.com/150x50?text=Logoipsum" class="client-logo slide-up"
+                            alt="Client Logo">
+                        <img src="https://via.placeholder.com/150x50?text=Logoipsum" class="client-logo slide-up"
+                            style="transition-delay: 0.1s;" alt="Client Logo">
+                        <img src="https://via.placeholder.com/150x50?text=Logoipsum" class="client-logo slide-up"
+                            style="transition-delay: 0.2s;" alt="Client Logo">
+                        <img src="https://via.placeholder.com/150x50?text=Logoipsum" class="client-logo slide-up"
+                            style="transition-delay: 0.3s;" alt="Client Logo">
+                        <img src="https://via.placeholder.com/150x50?text=Logoipsum" class="client-logo slide-up"
+                            style="transition-delay: 0.4s;" alt="Client Logo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-5 mb-lg-0 slide-up">
+                    <h2 class="section-title">Ready to transform your space?</h2>
+                    <p class="section-subtitle">Fill out the form and our design team will get back to you within 24
+                        hours to discuss your project.</p>
+
+                    <div class="mt-5">
+                        <div class="d-flex align-items-center mb-4 slide-up">
+                            <div class="bg-primary rounded-circle p-3 me-3">
+                                <i class="fas fa-phone text-white"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0">Call Us</h5>
+                                <p class="mb-0">+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-4 slide-up" style="transition-delay: 0.2s;">
+                            <div class="bg-primary rounded-circle p-3 me-3">
+                                <i class="fas fa-envelope text-white"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0">Email Us</h5>
+                                <p class="mb-0">info@archify.com</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center slide-up" style="transition-delay: 0.4s;">
+                            <div class="bg-primary rounded-circle p-3 me-3">
+                                <i class="fas fa-map-marker-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0">Visit Us</h5>
+                                <p class="mb-0">123 Design Ave, Creative District, CA 90210</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 slide-up" style="transition-delay: 0.2s;">
+                    <div class="contact-form">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="First Name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="Last Name" required>
+                                </div>
+                            </div>
+                            <input type="email" class="form-control" placeholder="Email Address" required>
+                            <input type="tel" class="form-control" placeholder="Phone Number">
+                            <select class="form-control">
+                                <option selected disabled>Project Type</option>
+                                <option>Residential</option>
+                                <option>Commercial</option>
+                                <option>Office Space</option>
+                                <option>Other</option>
+                            </select>
+                            <textarea class="form-control" rows="4" placeholder="Tell us about your project"></textarea>
+                            <button type="submit" class="btn btn-primary w-100">Submit Request</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0 slide-up">
+                    <div class="footer-logo">Archify</div>
+                    <p>Transforming spaces, elevating lifestyles with bespoke interior designs that blend aesthetics
+                        with functionality.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 mb-5 mb-md-0 slide-up" style="transition-delay: 0.1s;">
+                    <div class="footer-links">
+                        <h5>Quick Links</h5>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#products">Products</a></li>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#blog">Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 mb-5 mb-md-0 slide-up" style="transition-delay: 0.2s;">
+                    <div class="footer-links">
+                        <h5>Services</h5>
+                        <ul>
+                            <li><a href="#">Interior Design</a></li>
+                            <li><a href="#">Space Planning</a></li>
+                            <li><a href="#">Custom Furniture</a></li>
+                            <li><a href="#">Lighting Design</a></li>
+                            <li><a href="#">Consultation</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-12 slide-up" style="transition-delay: 0.3s;">
+                    <div class="footer-links">
+                        <h5>Newsletter</h5>
+                        <p>Subscribe to our newsletter for design tips and exclusive offers.</p>
+                        <form class="mt-4">
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="Your Email">
+                                <button class="btn btn-primary" type="submit">Subscribe</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 text-center copyright slide-up" style="transition-delay: 0.4s;">
+                    <p class="mb-0">© 2023 Archify. All Rights Reserved. Designed with <i
+                            class="fas fa-heart text-danger"></i> by Archify Team</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animation
+        document.addEventListener('DOMContentLoaded', function () {
+            const fadeElements = document.querySelectorAll('.fade-in, .slide-up');
+
+            const fadeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(element => {
+                fadeObserver.observe(element);
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

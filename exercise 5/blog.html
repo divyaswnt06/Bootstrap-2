@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog - Archify</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Animate.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* Include all the styles from the main page */
+      :root {
+        --primary-color: #1a3a5f;
+        --secondary-color: #d4af37;
+        --light-color: #f8f9fa;
+        --dark-color: #212529;
+        --accent-color: #6c757d;
+      }
+
+      /* ... (include all other styles from the main page) ... */
+
+      .blog-hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+          url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 150px 0 100px;
+        text-align: center;
+      }
+
+      .blog-card {
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        margin-bottom: 30px;
+        height: 100%;
+      }
+
+      .blog-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .blog-img {
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .blog-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: 600;
+        font-size: 0.8rem;
+      }
+
+      .blog-meta {
+        color: var(--accent-color);
+        font-size: 0.9rem;
+      }
+
+      .blog-meta i {
+        margin-right: 5px;
+      }
+
+      .category-sidebar {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+      }
+
+      .category-sidebar h4 {
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--secondary-color);
+      }
+
+      .category-sidebar ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .category-sidebar li {
+        margin-bottom: 10px;
+      }
+
+      .category-sidebar a {
+        color: var(--dark-color);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .category-sidebar a:hover {
+        color: var(--secondary-color);
+        padding-left: 5px;
+      }
+
+      .popular-posts .post-item {
+        display: flex;
+        margin-bottom: 15px;
+      }
+
+      .popular-posts .post-img {
+        width: 80px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-right: 15px;
+      }
+
+      .popular-posts .post-title {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+      }
+
+      .popular-posts .post-date {
+        font-size: 0.8rem;
+        color: var(--accent-color);
+      }
+
+      .tags-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .tag {
+        background-color: var(--light-color);
+        color: var(--dark-color);
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+      }
+
+      .tag:hover {
+        background-color: var(--secondary-color);
+        color: white;
+      }
+      .navbar {
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 15px 0;
+        transition: all 0.3s ease;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1030; /* Bootstrap's default z-index for fixed elements */
+        width: 100%;
+      }
+
+      /* Add this to create space for the fixed navbar */
+      body {
+        padding-top: 70px; /* Adjust based on your navbar height */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Archify</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-primary" href="index.html#contact">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Blog Hero Section -->
+    <section class="blog-hero">
+      <div class="container">
+        <h1 class="hero-title animate__animated animate__fadeInDown">
+          Archify Blog
+        </h1>
+        <p
+          class="hero-subtitle animate__animated animate__fadeIn animate__delay-1s"
+        >
+          Design inspiration, trends, and expert advice
+        </p>
+      </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <!-- Featured Post -->
+            <div class="card blog-card mb-5">
+              <span class="blog-badge">Featured</span>
+              <img
+                src="https://images.unsplash.com/photo-1600566752229-250ed79470c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+                class="card-img-top blog-img"
+                alt="Sustainable Design"
+              />
+              <div class="card-body">
+                <div class="blog-meta mb-3">
+                  <span><i class="far fa-calendar-alt"></i> June 15, 2023</span>
+                  <span class="ms-3"
+                    ><i class="far fa-user"></i> Sarah Johnson</span
+                  >
+                  <span class="ms-3"
+                    ><i class="far fa-folder"></i> Sustainable Design</span
+                  >
+                </div>
+                <h3 class="card-title">
+                  The Future of Sustainable Architecture
+                </h3>
+                <p class="card-text">
+                  Explore how innovative materials and energy-efficient designs
+                  are shaping the future of sustainable architecture. Learn
+                  about the latest trends and how you can incorporate them into
+                  your next project...
+                </p>
+                <a href="#" class="btn btn-primary">Read More</a>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Post 1 -->
+              <div class="col-md-6 mb-4">
+                <div class="card blog-card h-100">
+                  <img
+                    src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+                    class="card-img-top blog-img"
+                    alt="Minimalist Design"
+                  />
+                  <div class="card-body">
+                    <div class="blog-meta mb-2">
+                      <span
+                        ><i class="far fa-calendar-alt"></i> May 28, 2023</span
+                      >
+                    </div>
+                    <h5 class="card-title">
+                      The Art of Minimalist Interior Design
+                    </h5>
+                    <p class="card-text">
+                      Discover how less can truly be more with these minimalist
+                      design principles that create serene, functional spaces.
+                    </p>
+                    <a href="#" class="btn btn-sm btn-primary">Read More</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Post 2 -->
+              <div class="col-md-6 mb-4">
+                <div class="card blog-card h-100">
+                  <img
+                    src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+                    class="card-img-top blog-img"
+                    alt="Home Office"
+                  />
+                  <div class="card-body">
+                    <div class="blog-meta mb-2">
+                      <span
+                        ><i class="far fa-calendar-alt"></i> April 12,
+                        2023</span
+                      >
+                    </div>
+                    <h5 class="card-title">Creating the Perfect Home Office</h5>
+                    <p class="card-text">
+                      With remote work becoming the norm, learn how to design a
+                      home office that boosts productivity and comfort.
+                    </p>
+                    <a href="#" class="btn btn-sm btn-primary">Read More</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Post 3 -->
+              <div class="col-md-6 mb-4">
+                <div class="card blog-card h-100">
+                  <span class="blog-badge">Trending</span>
+                  <img
+                    src="https://images.unsplash.com/photo-1600121848594-d8644e57abab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+                    class="card-img-top blog-img"
+                    alt="Color Trends"
+                  />
+                  <div class="card-body">
+                    <div class="blog-meta mb-2">
+                      <span
+                        ><i class="far fa-calendar-alt"></i> March 30,
+                        2023</span
+                      >
+                    </div>
+                    <h5 class="card-title">
+                      2023 Color Trends in Interior Design
+                    </h5>
+                    <p class="card-text">
+                      From earthy neutrals to bold accents, discover the color
+                      palettes that will dominate interior design this year.
+                    </p>
+                    <a href="#" class="btn btn-sm btn-primary">Read More</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Post 4 -->
+              <div class="col-md-6 mb-4">
+                <div class="card blog-card h-100">
+                  <img
+                    src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+                    class="card-img-top blog-img"
+                    alt="Small Spaces"
+                  />
+                  <div class="card-body">
+                    <div class="blog-meta mb-2">
+                      <span
+                        ><i class="far fa-calendar-alt"></i> February 18,
+                        2023</span
+                      >
+                    </div>
+                    <h5 class="card-title">Maximizing Small Spaces</h5>
+                    <p class="card-text">
+                      Clever design solutions and space-saving furniture ideas
+                      to make the most of compact living areas.
+                    </p>
+                    <a href="#" class="btn btn-sm btn-primary">Read More</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Page navigation">
+              <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                  <a
+                    class="page-link"
+                    href="#"
+                    tabindex="-1"
+                    aria-disabled="true"
+                    >Previous</a
+                  >
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#">Next</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="col-lg-4">
+            <div class="category-sidebar">
+              <h4>Categories</h4>
+              <ul>
+                <li><a href="#">Sustainable Design (12)</a></li>
+                <li><a href="#">Interior Trends (8)</a></li>
+                <li><a href="#">Space Planning (5)</a></li>
+                <li><a href="#">Materials & Finishes (7)</a></li>
+                <li><a href="#">Home Office (4)</a></li>
+                <li><a href="#">Color Theory (6)</a></li>
+                <li><a href="#">Case Studies (9)</a></li>
+              </ul>
+            </div>
+
+            <div class="category-sidebar">
+              <h4>Popular Posts</h4>
+              <div class="popular-posts">
+                <div class="post-item">
+                  <img
+                    src="https://images.unsplash.com/photo-1600566752229-250ed79470c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+                    class="post-img"
+                    alt="Post 1"
+                  />
+                  <div>
+                    <h5 class="post-title">
+                      The Future of Sustainable Architecture
+                    </h5>
+                    <p class="post-date">June 15, 2023</p>
+                  </div>
+                </div>
+                <div class="post-item">
+                  <img
+                    src="https://images.unsplash.com/photo-1600121848594-d8644e57abab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+                    class="post-img"
+                    alt="Post 2"
+                  />
+                  <div>
+                    <h5 class="post-title">
+                      2023 Color Trends in Interior Design
+                    </h5>
+                    <p class="post-date">March 30, 2023</p>
+                  </div>
+                </div>
+                <div class="post-item">
+                  <img
+                    src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+                    class="post-img"
+                    alt="Post 3"
+                  />
+                  <div>
+                    <h5 class="post-title">Creating the Perfect Home Office</h5>
+                    <p class="post-date">April 12, 2023</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="category-sidebar">
+              <h4>Tags</h4>
+              <div class="tags-cloud">
+                <a href="#" class="tag">#design</a>
+                <a href="#" class="tag">#architecture</a>
+                <a href="#" class="tag">#sustainability</a>
+                <a href="#" class="tag">#interiors</a>
+                <a href="#" class="tag">#trends</a>
+                <a href="#" class="tag">#furniture</a>
+                <a href="#" class="tag">#lighting</a>
+                <a href="#" class="tag">#materials</a>
+                <a href="#" class="tag">#colors</a>
+                <a href="#" class="tag">#spaces</a>
+              </div>
+            </div>
+
+            <div class="category-sidebar">
+              <h4>Subscribe</h4>
+              <p>
+                Get the latest design inspiration and tips delivered to your
+                inbox.
+              </p>
+              <form>
+                <div class="mb-3">
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Your Email"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                  Subscribe
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <!-- ... (include the same footer from the main page) ... -->
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+      // Include the same JavaScript from the main page
+    </script>
+  </body>
+</html>
